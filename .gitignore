@@ -21,3 +21,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
