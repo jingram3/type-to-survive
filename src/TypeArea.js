@@ -1,5 +1,6 @@
 import * as React from "react";
-import './TypeArea.css';
+import './TypeArea.scss';
+import {WpmDisplay} from "./WpmDisplay";
 
 function getStyledText(text, currentIndex) {
     return [...text].map((char, i) =>
@@ -11,20 +12,39 @@ export function TypeArea(props) {
     const {useState} = React;
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [wordCount, setWordCount] = useState(0);
+    const [startTime, setStartTime] = useState();
 
-    return <div>
-        <div>{getStyledText(props.text, currentIndex)}</div>
+    const handleTextInputChange = (e) => {
+        if (!startTime) {
+            setStartTime(new Date());
+        }
+
+        let value = e.target.value;
+        const currentChar = value[value.length - 1];
+
+        if (currentChar === props.text[currentIndex]) {
+            setCurrentIndex(currentIndex + 1);
+
+            if (currentChar === " ") {
+                setWordCount(wordCount + 1);
+            }
+        }
+
+        e.target.value = currentChar || "";
+    };
+
+    return <div className='type-area'>
+        <div className='text'>
+            {getStyledText(props.text, currentIndex)}
+        </div>
         <div>
             <input
                 type='text'
                 data-testid="text-input"
-                onChange={(e) => {
-                    if (e.target.value[e.target.value.length - 1] === props.text[currentIndex]) {
-                        setCurrentIndex(currentIndex + 1);
-                    }
-                    e.target.value = e.target.value[e.target.value.length - 1] || "";
-                }}
+                onChange={handleTextInputChange}
             />
         </div>
+        {startTime && <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount} />}
     </div>;
 }
