@@ -1,20 +1,29 @@
 .type-area {
-    padding: 20px;
+  padding: 20px;
 
-    .text {
-        width: 450px;
-        margin: 0 auto;
-        text-align: left;
-        border: 1px solid lightgrey;
-        padding: 12px;
+  .text {
+    width: 450px;
+    margin: 0 auto;
+    text-align: left;
+    border: 1px solid lightgrey;
+    padding: 12px;
 
-        .completed {
-            color: darkgreen;
-            background-color: lightgreen;
-        }
+    .completed {
+      color: darkgreen;
+      background-color: lightgreen;
     }
+  }
 
-    > div + div {
-        margin-top: 20px;
+  .error {
+    border-color: #900;
+    background-color: #FDD;
+
+    &:focus {
+      outline: none;
     }
+  }
+
+  > div + div {
+    margin-top: 20px;
+  }
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import './TypeArea.scss';
 import {WpmDisplay} from "./WpmDisplay";
+import {INITIAL_HP} from "./utils/constants";
 
 function getStyledText(text, currentIndex) {
     return [...text].map((char, i) =>
@@ -13,7 +14,9 @@ export function TypeArea(props) {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [wordCount, setWordCount] = useState(0);
+    const [currentHealth, setCurrentHealth] = useState(INITIAL_HP);
     const [startTime, setStartTime] = useState();
+    const [mistyped, setMistyped] = useState(false);
 
     const handleTextInputChange = (e) => {
         if (!startTime) {
@@ -24,11 +27,19 @@ export function TypeArea(props) {
         const currentChar = value[value.length - 1];
 
         if (currentChar === props.text[currentIndex]) {
+            setMistyped(false);
             setCurrentIndex(currentIndex + 1);
 
             if (currentChar === " ") {
                 setWordCount(wordCount + 1);
             }
+        }
+        else {
+            if (!mistyped) {
+                setCurrentHealth(currentHealth - 1);
+            }
+
+            setMistyped(true);
         }
 
         e.target.value = currentChar || "";
@@ -43,8 +54,14 @@ export function TypeArea(props) {
                 type='text'
                 data-testid="text-input"
                 onChange={handleTextInputChange}
+                className={mistyped ? "error" : ""}
             />
         </div>
-        {startTime && <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount} />}
+        <div>HP: {currentHealth}</div>
+        {startTime &&
+        <div>
+            <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount}/>
+        </div>
+        }
     </div>;
 }
