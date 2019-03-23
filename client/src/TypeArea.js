@@ -2,6 +2,7 @@ import * as React from "react";
 import './TypeArea.scss';
 import {WpmDisplay} from "./WpmDisplay";
 import {INITIAL_HP} from "./utils/constants";
+import {emit, subscribe} from "./utils/eventHandlers";
 
 function getStyledText(text, currentIndex) {
     return [...text].map((char, i) =>
@@ -10,13 +11,24 @@ function getStyledText(text, currentIndex) {
 }
 
 export function TypeArea(props) {
-    const {useState} = React;
+    const {useState, useEffect} = React;
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [wordCount, setWordCount] = useState(0);
     const [currentHealth, setCurrentHealth] = useState(INITIAL_HP);
     const [startTime, setStartTime] = useState();
     const [mistyped, setMistyped] = useState(false);
+    const [players, setPlayers] = useState({});
+
+    useEffect(() => {
+        subscribe('player change', (players) => {
+            setPlayers(players);
+        });
+    }, []);
+
+    useEffect(() => {
+        emit('request players');
+    }, []);
 
     const handleTextInputChange = (e) => {
         if (!startTime) {
@@ -36,6 +48,7 @@ export function TypeArea(props) {
         } else {
             if (!mistyped) {
                 setCurrentHealth(currentHealth - 1);
+                emit('mistype');
             }
 
             setMistyped(true);
@@ -59,13 +72,26 @@ export function TypeArea(props) {
             </div>
         </div>
         <div className='metrics'>
-            <div>HP: {currentHealth}</div>
-
-            {startTime &&
             <div>
-                <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount}/>
+                <div>HP: {currentHealth}</div>
+
+                {startTime &&
+                <div>
+                    <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount}/>
+                </div>
+                }
             </div>
-            }
+            <div className='players'>
+                {Object.keys(players).map((id) =>
+                    <div key={id}>
+                        Player: {id}
+                        <ul>
+                            <li>HP: {players[id].hp}</li>
+                        </ul>
+                    </div>
+                )
+                }
+            </div>
         </div>
     </div>;
 }
