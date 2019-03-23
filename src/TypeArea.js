@@ -33,8 +33,7 @@ export function TypeArea(props) {
             if (currentChar === " ") {
                 setWordCount(wordCount + 1);
             }
-        }
-        else {
+        } else {
             if (!mistyped) {
                 setCurrentHealth(currentHealth - 1);
             }
@@ -45,23 +44,28 @@ export function TypeArea(props) {
         e.target.value = currentChar || "";
     };
 
-    return <div className='type-area'>
-        <div className='text'>
-            {getStyledText(props.text, currentIndex)}
+    return <div className='type-area-outer'>
+        <div className='type-area'>
+            <div className='text'>
+                {getStyledText(props.text, currentIndex)}
+            </div>
+            <div>
+                <input
+                    type='text'
+                    data-testid="text-input"
+                    onChange={handleTextInputChange}
+                    className={mistyped ? "error" : ""}
+                />
+            </div>
         </div>
-        <div>
-            <input
-                type='text'
-                data-testid="text-input"
-                onChange={handleTextInputChange}
-                className={mistyped ? "error" : ""}
-            />
+        <div className='metrics'>
+            <div>HP: {currentHealth}</div>
+
+            {startTime &&
+            <div>
+                <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount}/>
+            </div>
+            }
         </div>
-        <div>HP: {currentHealth}</div>
-        {startTime &&
-        <div>
-            <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount}/>
-        </div>
-        }
     </div>;
 }
