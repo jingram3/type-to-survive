@@ -9,6 +9,12 @@
   .metrics {
     width: 300px;
     flex: 0 0 auto;
+    font-family: 'Roboto Mono', monospace;
+
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 12px;
+    background-color: white;
   }
 
   .players {
@@ -26,7 +32,9 @@
     margin: 0 auto;
     text-align: left;
     border: 1px solid lightgrey;
+    border-radius: 4px;
     padding: 12px;
+    background-color: white;
 
     .completed {
       color: darkgreen;

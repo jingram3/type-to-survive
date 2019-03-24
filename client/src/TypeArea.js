@@ -1,8 +1,8 @@
 import * as React from "react";
 import './TypeArea.scss';
-import {WpmDisplay} from "./WpmDisplay";
 import {INITIAL_HP} from "./utils/constants";
 import {emit, subscribe} from "./utils/eventHandlers";
+import {Metrics} from "./Metrics";
 
 function getStyledText(text, currentIndex) {
     return [...text].map((char, i) =>
@@ -71,27 +71,11 @@ export function TypeArea(props) {
                 />
             </div>
         </div>
-        <div className='metrics'>
-            <div>
-                <div>HP: {currentHealth}</div>
-
-                {startTime &&
-                <div>
-                    <WpmDisplay startTime={startTime} endTime={new Date()} wordCount={wordCount}/>
-                </div>
-                }
-            </div>
-            <div className='players'>
-                {Object.keys(players).map((id) =>
-                    <div key={id}>
-                        Player: {id}
-                        <ul>
-                            <li>HP: {players[id].hp}</li>
-                        </ul>
-                    </div>
-                )
-                }
-            </div>
-        </div>
+        <Metrics
+            startTime={startTime}
+            wordCount={wordCount}
+            players={players}
+            currentHealth={currentHealth}
+        />
     </div>;
 }
