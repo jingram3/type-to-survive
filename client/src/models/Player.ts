@@ -1,3 +1,3 @@
 export interface Player {
-    hp: number;
+  hp: number;
 }
