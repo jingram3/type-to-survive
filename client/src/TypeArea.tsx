@@ -3,14 +3,19 @@ import './TypeArea.scss';
 import {INITIAL_HP} from "./utils/constants";
 import {emit, subscribe} from "./utils/eventHandlers";
 import {Metrics} from "./Metrics";
+import {Player} from "./models/Player";
 
-function getStyledText(text, currentIndex) {
+function getStyledText(text: string, currentIndex: number) {
     return [...text].map((char, i) =>
         <span key={i} className={i <= currentIndex - 1 ? 'completed' : ''}>{char}</span>
     );
 }
 
-export function TypeArea(props) {
+interface Props {
+    text: string;
+}
+
+export function TypeArea(props: Props) {
     const {useState, useEffect} = React;
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,7 +26,7 @@ export function TypeArea(props) {
     const [players, setPlayers] = useState({});
 
     useEffect(() => {
-        subscribe('player change', (players) => {
+        subscribe('player change', (players: Player) => {
             setPlayers(players);
         });
     }, []);
@@ -30,7 +35,7 @@ export function TypeArea(props) {
         emit('request players');
     }, []);
 
-    const handleTextInputChange = (e) => {
+    const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!startTime) {
             setStartTime(new Date());
         }

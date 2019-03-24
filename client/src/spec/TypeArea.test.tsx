@@ -1,24 +1,28 @@
 import * as React from "react";
 import {TypeArea} from "../TypeArea";
-import {cleanup, render} from "react-testing-library";
+import {cleanup, render, RenderResult} from "react-testing-library";
 import {Simulate} from 'react-dom/test-utils';
 import {INITIAL_HP} from "../utils/constants";
 
 describe('TypeArea', function () {
-    function type(char, input) {
+    function type(char: string, input: HTMLInputElement) {
         input.value += char;
         Simulate.change(input);
     }
 
-    function testHp(hp, container) {
+    function testHp(hp: number, container: RenderResult) {
         container.getByText("HP: " + hp);
+    }
+
+    function getInput(container: RenderResult) {
+        return container.getByTestId('text-input') as HTMLInputElement;
     }
 
     const sampleText = 'Some text here.';
 
     it('should clear the input when a character is entered', function () {
         const container = render(<TypeArea text={sampleText}/>);
-        const input = container.getByTestId('text-input');
+        const input = getInput(container);
 
         type('S', input);
         expect(input.value).toEqual('S');
@@ -29,7 +33,7 @@ describe('TypeArea', function () {
 
     it('should highlight completed characters', function () {
         const container = render(<TypeArea text={sampleText}/>);
-        const input = container.getByTestId('text-input');
+        const input = getInput(container);
         type('S', input);
         type('o', input);
         type('l', input);
@@ -42,7 +46,7 @@ describe('TypeArea', function () {
 
         expect(container.queryByText("WPM:")).toBe(null);
 
-        const input = container.getByTestId('text-input');
+        const input = getInput(container);
         type('S', input);
 
         container.getByText("WPM:");
@@ -53,7 +57,7 @@ describe('TypeArea', function () {
 
         testHp(INITIAL_HP, container);
 
-        const input = container.getByTestId('text-input');
+        const input = getInput(container);
         type('x', input);
 
         testHp(INITIAL_HP - 1, container);
@@ -64,7 +68,7 @@ describe('TypeArea', function () {
 
         testHp(INITIAL_HP, container);
 
-        const input = container.getByTestId('text-input');
+        const input = getInput(container);
         type('S', input);
 
         testHp(INITIAL_HP, container);
@@ -75,7 +79,7 @@ describe('TypeArea', function () {
 
         testHp(INITIAL_HP, container);
 
-        const input = container.getByTestId('text-input');
+        const input = getInput(container);
         type('x', input);
         type('x', input);
 

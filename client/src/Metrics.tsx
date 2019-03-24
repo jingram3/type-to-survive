@@ -1,8 +1,16 @@
 import * as React from "react";
 import './TypeArea.scss';
 import {WpmDisplay} from "./WpmDisplay";
+import {Player} from "./models/Player";
 
-export function Metrics(props) {
+interface Props {
+    startTime: Date;
+    currentHealth: number;
+    wordCount: number;
+    players: { [id: string]: Player};
+}
+
+export function Metrics(props: Props) {
     return (
         <div className='metrics'>
             <div>
