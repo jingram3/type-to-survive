@@ -20,7 +20,7 @@ describe('TypeArea', function () {
 
   const sampleText = 'Some text here.';
 
-  it('should clear the input when a character is entered', function () {
+  it('should show only the most recent character when typed', function () {
     const container = render(<TypeArea text={sampleText}/>);
     const input = getInput(container);
 
@@ -29,6 +29,16 @@ describe('TypeArea', function () {
 
     type('o', input);
     expect(input.value).toEqual('o');
+  });
+
+  it('should clear the input when mistyped', function () {
+    const container = render(<TypeArea text={sampleText}/>);
+    const input = getInput(container);
+
+    type('S', input);
+    expect(input.value).toEqual('S');
+    type('x', input);
+    expect(input.value).toEqual('');
   });
 
   it('should highlight completed characters', function () {

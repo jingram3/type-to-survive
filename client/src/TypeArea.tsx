@@ -7,7 +7,12 @@ import {Player} from "./models/Player";
 
 function getStyledText(text: string, currentIndex: number) {
   return [...text].map((char, i) =>
-    <span key={i} className={i <= currentIndex - 1 ? 'completed' : ''}>{char}</span>
+    <span
+      key={i}
+      className={i <= currentIndex - 1 ? 'completed' : (i === currentIndex ? 'next-char' : '')}
+    >
+      {char}
+    </span>
   );
 }
 
@@ -50,6 +55,8 @@ export function TypeArea(props: Props) {
       if (currentChar === " ") {
         setWordCount(wordCount + 1);
       }
+
+      e.target.value = currentChar || "";
     } else {
       if (!mistyped) {
         setCurrentHealth(currentHealth - 1);
@@ -57,9 +64,9 @@ export function TypeArea(props: Props) {
       }
 
       setMistyped(true);
-    }
 
-    e.target.value = currentChar || "";
+      e.target.value = '';
+    }
   };
 
   return (

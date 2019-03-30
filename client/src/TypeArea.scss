@@ -28,13 +28,14 @@
   align-items: center;
 
   .text {
-    width: 450px;
+    width: 475px;
     margin: 0 auto;
     text-align: left;
     border: 1px solid lightgrey;
     border-radius: 4px;
     padding: 12px;
     background-color: white;
+    letter-spacing: 0.3px;
 
     .completed {
       color: darkgreen;
