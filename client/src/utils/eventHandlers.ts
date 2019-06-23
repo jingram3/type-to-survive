@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const socket = io();
+const socket = io.connect();
 
 export function subscribe(event: string, callback: Function) {
   socket.on(event, callback);

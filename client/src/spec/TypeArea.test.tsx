@@ -3,6 +3,10 @@ import {TypeArea} from "../TypeArea";
 import {cleanup, render, RenderResult} from "react-testing-library";
 import {Simulate} from 'react-dom/test-utils';
 import {INITIAL_HP} from "../utils/constants";
+import * as io from 'socket.io-client';
+import {Player} from "../models/Player";
+
+jest.mock('socket.io-client');
 
 describe('TypeArea', function () {
   function type(char: string, input: HTMLInputElement) {
@@ -94,6 +98,44 @@ describe('TypeArea', function () {
     type('x', input);
 
     testHp(INITIAL_HP - 1, container);
+  });
+
+  it('should display GAME OVER when only 1 active player is left', function () {
+    const container = render(<TypeArea text={sampleText}/>);
+
+    expect(container.queryByText('GAME OVER')).toBeNull();
+
+    // @ts-ignore
+    io.emit('player change', {
+      '1234': {
+        hasLost: false,
+        hp: 20,
+        name: '1234'
+      } as Player,
+      'abcd': {
+        hasLost: true,
+        hp: 0,
+        name: 'abcd'
+      } as Player,
+    });
+
+    container.getByText('GAME OVER');
+    container.getByText('1234 Wins!');
+  });
+
+  it('should not display GAME OVER when only 1 player exists', function () {
+    const container = render(<TypeArea text={sampleText}/>);
+
+    // @ts-ignore
+    io.emit('player change', {
+      '1234': {
+        hasLost: false,
+        hp: 20,
+        name: '1234'
+      } as Player
+    });
+
+    expect(container.queryByText('GAME OVER')).toBeNull();
   });
 
   afterEach(cleanup);

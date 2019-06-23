@@ -32,6 +32,7 @@ export function Metrics(props: Props) {
             Player: {id}
             <ul>
               <li>HP: {props.players[id].hp}</li>
+              <li>Has Lost: {props.players[id].hasLost ? "Yes" : "No"}</li>
             </ul>
           </div>
         )}

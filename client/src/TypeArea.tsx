@@ -28,17 +28,28 @@ export function TypeArea(props: Props) {
   const [currentHealth, setCurrentHealth] = useState(INITIAL_HP);
   const [startTime, setStartTime] = useState();
   const [mistyped, setMistyped] = useState(false);
-  const [players, setPlayers] = useState({});
+  const [players, setPlayers] = useState<{ [id: string]: Player }>({});
+  const [winner, setWinner] = useState<Player | null>(null);
 
   useEffect(() => {
-    subscribe('player change', (players: Player) => {
+    subscribe('player change', (players: { [id: string]: Player }) => {
       setPlayers(players);
+
+      const activePlayers = Object.values(players).filter((player) => !player.hasLost);
+
+      if (activePlayers.length == 1 && Object.keys(players).length > 1) {
+        setWinner(activePlayers[0]);
+      }
     });
   }, []);
 
   useEffect(() => {
     emit('request players');
   }, []);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [props.text]);
 
   const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!startTime) {
@@ -49,6 +60,7 @@ export function TypeArea(props: Props) {
     const currentChar = value[value.length - 1];
 
     if (currentChar === props.text[currentIndex]) {
+      emit('type');
       setMistyped(false);
       setCurrentIndex(currentIndex + 1);
 
@@ -90,6 +102,12 @@ export function TypeArea(props: Props) {
         players={players}
         currentHealth={currentHealth}
       />
+      {winner !== null &&
+      <div>
+        <div>GAME OVER</div>
+        <div>{winner.name} Wins!</div>
+      </div>
+      }
     </div>
   );
 }
