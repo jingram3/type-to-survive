@@ -13,7 +13,7 @@ export default function App() {
     subscribe('game start', setText);
   }, []);
 
-  const handleJoinClick = () => {
+  const handleSubmit = () => {
     setHasJoined(true);
     emit('player join', name);
   };
@@ -32,13 +32,13 @@ export default function App() {
           />
         </>
         :
-        <div className='name-entry'>
+        <form className='name-entry' onSubmit={handleSubmit}>
           <label htmlFor="name-input">Enter Your Name</label>
           <div>
             <input value={name} type='text' id='name-input' onChange={handleNameInputChange}/>
           </div>
-          <button onClick={handleJoinClick}>Join</button>
-        </div>
+          <button type='submit'>Join</button>
+        </form>
       }
     </div>
   );
