@@ -32,12 +32,12 @@ export function TypeArea(props: Props) {
   const [winner, setWinner] = useState<Player | null>(null);
 
   useEffect(() => {
-    subscribe('player change', (players: { [id: string]: Player }) => {
-      setPlayers(players);
+    subscribe('player change', (newPlayers: { [id: string]: Player }) => {
+      setPlayers(newPlayers);
 
-      const activePlayers = Object.values(players).filter((player) => !player.hasLost);
+      const activePlayers = Object.values(newPlayers).filter((player) => !player.hasLost);
 
-      if (activePlayers.length == 1 && Object.keys(players).length > 1) {
+      if (activePlayers.length == 1 && Object.keys(newPlayers).length > 1) {
         setWinner(activePlayers[0]);
       }
     });
@@ -82,7 +82,7 @@ export function TypeArea(props: Props) {
   };
 
   return (
-    <div className='type-area-outer'>
+    <div className='type-area-outer' data-testid='type-area'>
       <div className='type-area'>
         <div className='text'>
           {getStyledText(props.text, currentIndex)}

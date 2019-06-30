@@ -25,9 +25,6 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   console.log('a user connected: ', socket.id);
-  players = {...players, [socket.id]: {hp: 50, currentIndex: 0, hasLost: false, name: socket.id}};
-
-  io.emit('player change', players);
 
   socket.on('disconnect', function () {
     console.log('user disconnected: ', socket.id);
@@ -64,6 +61,12 @@ io.on('connection', function (socket) {
 
   socket.on('start', () => {
     io.emit('game start', textList[currentParagraph]);
+  });
+
+  socket.on('player join', (name) => {
+    players = {...players, [socket.id]: {hp: 50, currentIndex: 0, hasLost: false, name}};
+
+    io.emit('player change', players);
   });
 
   function handleParagraphCompletion() {

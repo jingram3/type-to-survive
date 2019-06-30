@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# cf-login --sso
 cd ../client
 yarn build
 cd ..

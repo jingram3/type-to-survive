@@ -27,12 +27,12 @@ export function Metrics(props: Props) {
         }
       </div>
       <div className='players'>
-        {Object.keys(props.players).map((id) =>
+        {Object.entries(props.players).map(([id, player]) =>
           <div key={id}>
-            Player: {id}
+            <div>Player: {player.name}</div>
             <ul>
-              <li>HP: {props.players[id].hp}</li>
-              <li>Has Lost: {props.players[id].hasLost ? "Yes" : "No"}</li>
+              <li>HP: {player.hp}</li>
+              <li>Has Lost: {player.hasLost ? "Yes" : "No"}</li>
             </ul>
           </div>
         )}

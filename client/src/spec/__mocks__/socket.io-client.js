@@ -4,7 +4,10 @@ const io = jest.genMockFromModule('socket.io-client');
 
 let EVENTS = {
   'request players': [() => undefined],
-  'player change': []
+  'player change': [],
+  'player join': [],
+  'type': [],
+  'mistype': []
 };
 function emit(event, ...args) {
   EVENTS[event].forEach(func => func(...args));
