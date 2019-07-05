@@ -58,17 +58,18 @@ export function TypeArea(props: Props) {
 
     let value = e.target.value;
     const currentChar = value[value.length - 1];
+    const wordEnders = ' .?!';
 
     if (currentChar === props.text[currentIndex]) {
       emit('type');
       setMistyped(false);
       setCurrentIndex(currentIndex + 1);
 
-      if (currentChar === " ") {
+      if (wordEnders.includes(currentChar)) {
         setWordCount(wordCount + 1);
-      }
 
-      e.target.value = currentChar || "";
+        e.target.value = '';
+      }
     } else {
       if (!mistyped) {
         setCurrentHealth(currentHealth - 1);
@@ -77,7 +78,7 @@ export function TypeArea(props: Props) {
 
       setMistyped(true);
 
-      e.target.value = '';
+      e.target.value = e.target.value.substring(0, e.target.value.length - 1);
     }
   };
 

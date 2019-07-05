@@ -24,25 +24,37 @@ describe('TypeArea', function () {
 
   const sampleText = 'Some text here.';
 
-  it('should show only the most recent character when typed', function () {
-    const container = render(<TypeArea text={sampleText}/>);
+  it('should clear typed characters in the input when the word ends', function () {
+    const container = render(<TypeArea text={'So I.?!'}/>);
     const input = getInput(container);
 
     type('S', input);
     expect(input.value).toEqual('S');
 
     type('o', input);
-    expect(input.value).toEqual('o');
+    expect(input.value).toEqual('So');
+
+    type(' ', input);
+    expect(input.value).toEqual('');
+
+    type('I', input);
+    expect(input.value).toEqual('I');
+    type('.', input);
+    expect(input.value).toEqual('');
+    type('?', input);
+    expect(input.value).toEqual('');
+    type('!', input);
+    expect(input.value).toEqual('');
   });
 
-  it('should clear the input when mistyped', function () {
+  it('should not include the typed character when mistyped', function () {
     const container = render(<TypeArea text={sampleText}/>);
     const input = getInput(container);
 
     type('S', input);
     expect(input.value).toEqual('S');
     type('x', input);
-    expect(input.value).toEqual('');
+    expect(input.value).toEqual('S');
   });
 
   it('should highlight completed characters', function () {
