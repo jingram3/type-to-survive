@@ -1,6 +1,6 @@
 import * as React from "react";
 import {TypeArea} from "../TypeArea";
-import {cleanup, render, RenderResult} from "react-testing-library";
+import {cleanup, render, RenderResult} from "@testing-library/react";
 import {Simulate} from 'react-dom/test-utils';
 import {INITIAL_HP} from "../utils/constants";
 import * as io from 'socket.io-client';

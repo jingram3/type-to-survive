@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Metrics} from "../Metrics";
-import {render} from "react-testing-library";
+import {render} from "@testing-library/react";
 import {Player} from "../models/Player";
 
 describe('Metrics', () => {
@@ -8,7 +8,8 @@ describe('Metrics', () => {
     const player: Player = {
       name: 'Joe',
       hp: 50,
-      hasLost: false
+      hasLost: false,
+      currentIndex: 0
     };
 
     const container = render(<Metrics

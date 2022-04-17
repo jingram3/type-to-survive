@@ -16,7 +16,7 @@ export function TypeArea(props: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [wordCount, setWordCount] = useState(0);
   const [currentHealth, setCurrentHealth] = useState(INITIAL_HP);
-  const [startTime, setStartTime] = useState();
+  const [startTime, setStartTime] = useState<Date>();
   const [mistyped, setMistyped] = useState(false);
   const [players, setPlayers] = useState<{ [id: string]: Player }>({});
   const [winner, setWinner] = useState<Player | null>(null);

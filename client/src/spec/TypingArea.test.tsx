@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Simulate} from "react-dom/test-utils";
-import {cleanup, render} from "react-testing-library";
+import {cleanup, render} from "@testing-library/react";
 import {TypingArea} from "../TypingArea";
 
 describe('TypingArea', function () {

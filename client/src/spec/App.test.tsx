@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../App';
-import {render} from "react-testing-library";
+import {render} from "@testing-library/react";
 import {emit} from "../utils/eventHandlers";
 import {Simulate} from "react-dom/test-utils";
 

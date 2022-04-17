@@ -4,7 +4,7 @@ import {WpmDisplay} from "./WpmDisplay";
 import {Player} from "./models/Player";
 
 interface Props {
-  startTime: Date;
+  startTime: Date | undefined;
   currentHealth: number;
   wordCount: number;
   players: { [id: string]: Player };
