@@ -1,17 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from '../App';
 import {render} from "@testing-library/react";
 import {emit} from "../utils/eventHandlers";
 import {Simulate} from "react-dom/test-utils";
 
 jest.mock('../utils/eventHandlers.ts');
-
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App/>, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
 
 it('should allow user to enter their name before playing', function () {
   const container = render(<App/>);
