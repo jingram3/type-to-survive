@@ -11,6 +11,6 @@
     "npm": "6.4.1"
   },
   "scripts": {
-    "build": "cd client && yarn install && yarn build"
+    "heroku-postbuild": "cd client && yarn install && yarn build"
   }
 }
