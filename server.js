@@ -56,6 +56,8 @@ io.on('connection', function (socket) {
       handleParagraphCompletion();
     } else {
       curPlayer.currentIndex++;
+
+      io.emit('player change', players);
     }
   });
 

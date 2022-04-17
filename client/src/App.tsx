@@ -3,15 +3,11 @@ import {useEffect, useState} from 'react';
 import './App.scss';
 import {TypeArea} from "./TypeArea";
 import {emit, subscribe} from "./utils/eventHandlers";
+import {GameArea} from "./GameArea";
 
 export default function App() {
-  const [text, setText] = useState('');
   const [hasJoined, setHasJoined] = useState(false);
   const [name, setName] = useState('');
-
-  useEffect(() => {
-    subscribe('game start', setText);
-  }, []);
 
   const handleSubmit = () => {
     setHasJoined(true);
@@ -25,12 +21,7 @@ export default function App() {
   return (
     <div className="App">
       {hasJoined ?
-        <>
-          <button onClick={() => emit('start')}>Start Game</button>
-          <TypeArea
-            text={text}
-          />
-        </>
+        <GameArea/>
         :
         <form className='name-entry' onSubmit={handleSubmit}>
           <label htmlFor="name-input">Enter Your Name</label>

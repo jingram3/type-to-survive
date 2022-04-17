@@ -4,17 +4,7 @@ import {INITIAL_HP} from "./utils/constants";
 import {emit, subscribe} from "./utils/eventHandlers";
 import {Metrics} from "./Metrics";
 import {Player} from "./models/Player";
-
-function getStyledText(text: string, currentIndex: number) {
-  return [...text].map((char, i) =>
-    <span
-      key={i}
-      className={i <= currentIndex - 1 ? 'completed' : (i === currentIndex ? 'next-char' : '')}
-    >
-      {char}
-    </span>
-  );
-}
+import {TypingArea} from "./TypingArea";
 
 interface Props {
   text: string;
@@ -82,12 +72,19 @@ export function TypeArea(props: Props) {
     }
   };
 
+  const playerPositions: { [name: string]: number } = {};
+  Object.entries(players).forEach(([key, value]) => {
+    playerPositions[value.name] = value.currentIndex;
+  });
+
   return (
     <div className='type-area-outer' data-testid='type-area'>
       <div className='type-area'>
-        <div className='text'>
-          {getStyledText(props.text, currentIndex)}
-        </div>
+        <TypingArea
+          text={props.text}
+          currentPosition={currentIndex}
+          playerPositions={playerPositions}
+        />
         <div>
           <input
             type='text'
